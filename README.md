@@ -3,5 +3,5 @@ This simple repo packages moe-counter [journey-ad/Moe-Counter](https://github.co
 
 To run it with docker, simply do:
 ```
-docker run -d -p 3000:3000 malteeez/moe-counter
+docker run -d -p 3000:3000 -v ./data/count.db:/usr/local/src/moe-counter/count.db malteeez/moe-counter
 ```
