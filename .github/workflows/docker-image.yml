@@ -9,26 +9,32 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
       packages: write
-      attestations: write
-      id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Log in to the Container registry
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: "ghcr.io"
-          username: ${{ github.actor }}
+          username: "malteeez"
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        id: push
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          platforms: linux/amd64,linux/arm64
           push: true
-          tags: malteeez/moe-counter:latest
+          tags: |
+            malteeez/moe-counter:latest
+            malteeez/moe-counter:${{github.sha}}
+            ghcr.io/malteeez/moe-counter:latest
+            ghcr.io/malteeez/moe-counter:${{github.sha}}
