@@ -9,6 +9,6 @@ RUN git config --global pack.windowMemory "50m" \
 
 EXPOSE 3000
 
-WORKDIR /usr/local/src/moe_counter
+WORKDIR /usr/local/src/moe-counter
 
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
